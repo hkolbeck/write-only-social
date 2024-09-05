@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="img/the-void-icon.png"
+    />
+
+    <title>The Void</title>
+
+    <link rel="canonical" href="https://the-void.social/" />
+    <meta name="description" content="A place to scream" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="The Void" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://the-void.social/" />
+    <meta property="og:description" content="A place to scream" />
+    <meta
+      property="og:image"
+      content="img/the-void-preview.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="An icon style outline of a possum screaming"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+
+    <script>
+      const screamIntoTheVoid = () => {
+        const scream = document.getElementById("scream");
+        const msg = document.getElementById("screamed-msg");
+
+        if (scream.value) {
+          if (window.lastScream) {
+            clearTimeout(window.lastScreamO);
+            clearTimeout(window.lastScream);
+          }
+
+          scream.value = "";
+          setTimeout(() => {
+            msg.showModal();
+            msg.style.opacity = "1";
+          }, 100);
+          window.lastScreamO = setTimeout(
+            () => (msg.style.opacity = "0"),
+            2500
+          );
+          window.lastScream = setTimeout(() => {
+            msg.close();
+            scream.focus();
+          }, 3000);
+        }
+      };
+    </script>
+    <style>
+      :root {
+        --background: white;
+        --composer: rgb(20, 23, 26);
+        --text: white;
+        --button: rgb(69, 181, 255);
+        --button-text: white;
+        --border: transparent;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #01051a;
+          --composer: rgb(14, 17, 19);
+          --text: white;
+          --button: rgb(69, 181, 255);
+          --button-text: white;
+          --border: rgb(38, 61, 77);
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --background: rgb(218, 236, 248);
+          --composer: #ffffff;
+          --text: black;
+          --button: rgb(0, 154, 255);
+          --button-text: white;
+          --border: rgb(69, 181, 255);
+        }
+      }
+
+      html {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: var(--background);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: "Helvetica", sans-serif;
+      }
+
+      a {
+        text-decoration: none;
+        font-weight: 900;
+      }
+
+      #header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 99vw;
+        height: 2rem;
+        padding-top: 10px;
+        text-align: right;
+      }
+
+      #wrapper {
+        grid-area: composer;
+        place-self: center;
+        margin: 5vh 20vw;
+        padding: 20px;
+        background: var(--composer);
+        border-radius: 10px;
+        border: solid 3px var(--border);
+        display: grid;
+        grid-template-areas:
+          "text"
+          "send";
+      }
+
+      #scream {
+        grid-area: text;
+        place-self: center;
+        color: var(--text);
+        background: transparent;
+        font-family: "Helvetica", sans-serif;
+        font-weight: 700;
+        border: none;
+        outline: none;
+        font-size: 1.5rem;
+        resize: none;
+      }
+
+      #send {
+        grid-area: send;
+        justify-self: end;
+        align-self: center;
+        padding: 10px 20px;
+        background: var(--button);
+        color: var(--button-text);
+        border-radius: 10px;
+        font-weight: 900;
+        font-size: 1.2rem;
+        border: none;
+      }
+
+      #send:hover {
+        filter: brightness(1.1);
+      }
+
+      #send:active {
+        background: var(--button);
+      }
+
+      #screamed-msg {
+        align-self: end;
+        text-align: center;
+        max-width: 60vw;
+        padding: 10px 20px;
+        margin: 10vh auto;
+        background-color: var(--button);
+        color: var(--button-text);
+        font-size: 1.2rem;
+        font-weight: 700;
+        border-radius: 10px;
+        transition: opacity 0.5s;
+        opacity: 0;
+        border: none;
+        outline: none;
+      }
+
+      #screamed-msg::backdrop {
+        display: none;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          justify-content: flex-start;
+        }
+
+        #wrapper {
+          margin: 20vh 5vw;
+          padding: 10px;
+        }
+
+        #scream {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+
+        #send {
+          padding: 5px 10px;
+          font-weight: 700;
+          font-size: 0.8rem;
+        }
+
+        #screamed-msg {
+          padding: 5px 10px;
+          font-weight: 600;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="wrapper">
+      <textarea
+        id="scream"
+        name="scream"
+        rows="8"
+        cols="33"
+        autofocus
+        aria-label="What are you screaming about?"
+        placeholder="What are you screaming about?"
+      ></textarea>
+      <button id="send" onclick="screamIntoTheVoid()">Scream</button>
+    </main>
+    <dialog id="screamed-msg">Your scream was sent into the void</dialog>
+    <header id="header">
+      <a href="https://bsky.app/profile/hannah.the-void.social">
+        <img
+          src="img/the-void.svg"
+          width="48px"
+          height="48px"
+          alt="An icon style outline of a possum screaming"
+        />
+      </a>
+    </header>
+  </body>
+  <script>
+    const scream = document.getElementById("scream");
+
+    scream.addEventListener("keydown", function (e) {
+      if ((e.code === "Enter"|| e.keyCode === 13) && (e.metaKey || e.shiftKey || e.ctrlKey || e.altKey)) {
+        screamIntoTheVoid();
+      }
+    });
+  </script>
+</html>

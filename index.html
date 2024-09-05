@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="icon"
-      href="https://cdn.glitch.global/10465771-7c8e-412f-9669-8b64316fce48/dev-null-icon.png?v=1672266563909"
+      href="img/the-void-icon.png"
     />
 
     <title>The Void</title>
 
-    <link rel="canonical" href="https://dev-null.glitch.me/" />
+    <link rel="canonical" href="https://the-void.social/" />
     <meta name="description" content="A place to scream" />
     <meta name="robots" content="index,follow" />
     <meta property="og:title" content="The Void" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://dev-null.glitch.me/" />
+    <meta property="og:url" content="https://the-void.social/" />
     <meta property="og:description" content="A place to scream" />
     <meta
       property="og:image"
-      content="https://cdn.glitch.global/10465771-7c8e-412f-9669-8b64316fce48/dev-null-preview.png?v=1672266580401"
+      content="img/the-void-preview.png"
     />
     <meta
       property="og:image:alt"
@@ -182,7 +182,6 @@
         color: var(--button-text);
         font-size: 1.2rem;
         font-weight: 700;
-        text-align: center;
         border-radius: 10px;
         transition: opacity 0.5s;
         opacity: 0;
@@ -191,7 +190,7 @@
       }
 
       #screamed-msg::backdrop {
-        display: hidden;
+        display: none;
       }
 
       @media (max-width: 700px) {
@@ -229,7 +228,6 @@
         name="scream"
         rows="8"
         cols="33"
-        resizeable="false"
         autofocus
         aria-label="What are you screaming about?"
         placeholder="What are you screaming about?"
@@ -238,9 +236,9 @@
     </main>
     <dialog id="screamed-msg">Your scream was sent into the void</dialog>
     <header id="header">
-      <a href="https://bsky.app/profile/hannah.not-ok.computer">
+      <a href="https://bsky.app/profile/hannah.the-void.social">
         <img
-          src="https://cdn.glitch.global/10465771-7c8e-412f-9669-8b64316fce48/dev-null-preview.png?v=1672266580401"
+          src="img/the-void.svg"
           width="48px"
           height="48px"
           alt="An icon style outline of a possum screaming"
@@ -252,7 +250,7 @@
     const scream = document.getElementById("scream");
 
     scream.addEventListener("keydown", function (e) {
-      if (e.keyCode === 13 && e.metaKey) {
+      if ((e.code === "Enter"|| e.keyCode === 13) && (e.metaKey || e.shiftKey || e.ctrlKey || e.altKey)) {
         screamIntoTheVoid();
       }
     });

@@ -35,27 +35,32 @@
     <script>
         const screamIntoTheVoid = () => {
             const scream = document.getElementById("scream");
-            const msg = document.getElementById("screamed-msg");
+            const yourScreamMsg = document.getElementById("screamed-msg");
 
             if (scream.value) {
                 if (window.lastScream) {
                     clearTimeout(window.lastScreamO);
                     clearTimeout(window.lastScream);
                 }
-
-                scream.value = "";
+                scream.disabled = "true"
+                scream.classList.add("evaporate");
                 setTimeout(() => {
-                    msg.showModal();
-                    msg.style.opacity = "1";
-                }, 100);
-                window.lastScreamO = setTimeout(
-                    () => (msg.style.opacity = "0"),
-                    2500
-                );
-                window.lastScream = setTimeout(() => {
-                    msg.close();
-                    scream.focus();
-                }, 3000);
+                    setTimeout(() => {
+                        yourScreamMsg.showModal();
+                        yourScreamMsg.style.opacity = "1";
+                    }, 100);
+                    window.lastScreamO = setTimeout(
+                        () => (yourScreamMsg.style.opacity = "0"),
+                        2500
+                    );
+                    window.lastScream = setTimeout(() => {
+                        yourScreamMsg.close();
+                        scream.value = "";
+                        scream.classList.remove("evaporate");
+                        scream.disabled = false;
+                        scream.focus();
+                    }, 3000);
+                }, 1000);
             }
         };
     </script>
@@ -194,6 +199,37 @@
             display: none;
         }
 
+        @keyframes evaporate-anim {
+            from {
+                opacity: 100%;
+                filter: blur(0);
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                filter: blur(10px);
+                transform: scale(4);
+            }
+        }
+
+        @media (prefers-reduced-motion) {
+            @keyframes evaporate-anim {
+                from {
+                    opacity: 100%;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+        }
+
+        .evaporate {
+            animation-name: evaporate-anim;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            transform-origin: center top;
+        }
+
         @media (max-width: 700px) {
             body {
                 justify-content: flex-start;
@@ -237,14 +273,12 @@
 </main>
 <dialog id="screamed-msg">Your scream was sent into the void</dialog>
 <header id="header">
-    <a href="https://bsky.app/profile/hannah.the-void.social" target="_blank" rel="noopener noreferrer">
-        <img
-                src="img/the-void.svg"
-                width="48px"
-                height="48px"
-                alt="An icon style outline of a possum screaming"
-        />
-    </a>
+    <img
+            src="img/the-void.svg"
+            width="48px"
+            height="48px"
+            alt="An icon style outline of a possum screaming"
+    />
 </header>
 </body>
 <script>
